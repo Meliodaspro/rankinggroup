@@ -61,9 +61,12 @@
                                 <tr>
                                     <th>Rank</th>
                                     <th>Name</th>
+                                    <th class="text-center">Id</th>
                                     <th class="text-center">Posts</th>
+                                    <th class="text-center">Reaction</th>
+                                    <th class="text-center">Comment</th>
+                                    <th class="text-center">Spam</th>
                                     <th class="text-center">Points</th>
-
 
                                 </tr>
                                 </thead>
@@ -81,7 +84,11 @@
                                         </a>
 
                                     </td>
+                                    <td class="text-center">{{rank.id}}</td>
                                     <td class="text-center">{{rank.post}}</td>
+                                    <td class="text-center">{{rank.reaction}}</td>
+                                    <td class="text-center">{{rank.comment}}</td>
+                                    <td class="text-center">{{rank.spam}}</td>
                                     <td class="text-center">{{rank.points}}</td>
                                 </tr>
                                 </tbody>
