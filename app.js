@@ -117,10 +117,10 @@ function rank(id, token, secret, day, x){
                           self.group = r.name;
                           self.ready = true;
                       }else{
-                          self.message ='không thể xác định id nhóm (không tìm thấy)';
+                          self.message ='Vui lòng chờ. admin đang đang bảo trì hệ thống! sẽ trực tuyến lại sau.';
                       }
                   }else{
-                      self.message ='không thể xác định id nhóm (không tìm thấy)';
+                      self.message ='Vui lòng chờ. Admin đang đang bảo trì hệ thống! sẽ trực tuyến lại sau.';
                   }
               });
           },
