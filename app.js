@@ -117,10 +117,10 @@ function rank(id, token, secret, day, x){
                           self.group = r.name;
                           self.ready = true;
                       }else{
-                          self.message ='Vui lòng chờ. Admin đang đang bảo trì hệ thống! sẽ trực tuyến lại sau.';
+                          self.message ='Vui lòng chờ. Admin đang đang bảo trì hệ thống! sẽ trực tuyến lại sau vài phút, hoặc có thể lâu hơn dự kiến.';
                       }
                   }else{
-                      self.message ='Vui lòng chờ. Admin đang đang bảo trì hệ thống! sẽ trực tuyến lại sau.';
+                      self.message ='Vui lòng chờ. Admin đang đang bảo trì hệ thống! sẽ trực tuyến lại sau vài phút, hoặc có thể lâu hơn dự kiến.';
                   }
               });
           },
