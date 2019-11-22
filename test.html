@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WVV57HH');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=800, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link rel="stylesheet" type="text/css" href="seach.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <canvas id="canvas">Canvas is not supported in your browser.</canvas>
+    <title>Group Ranking</title>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script type="text/javascript">
+    function time() {
+    var today = new Date();
+    var weekday=new Array(7);
+    weekday[0]="Chủ Nhật";
+    weekday[1]="Thứ Hai";
+    weekday[2]="Thứ Ba";
+    weekday[3]="Thứ Tư";
+    weekday[4]="Thứ Năm";
+    weekday[5]="Thứ Sáu";
+    weekday[6]="Thứ Bảy";
+    var day = weekday[today.getDay()];
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    var h=today.getHours();
+    var m=today.getMinutes();
+    var s=today.getSeconds();
+    m=checkTime(m);
+    s=checkTime(s);
+    nowTime = h+":"+m+":"+s;
+    if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} today = day+', '+ dd+'/'+mm+'/'+yyyy;
+
+    tmp='<span class="date">'+today+' | '+nowTime+'</span>';
+
+    document.getElementById("clock").innerHTML=tmp;
+
+    clocktime=setTimeout("time()","1000","JavaScript");
+    function checkTime(i)
+    {
+      if(i<10){
+     i="0" + i;
+      }
+      return i;
+    }
+}
+</script>
+    <style>#ranking {
+        max-width: 1000px;
+    }
+    button[disabled]+.tooltip{
+        visibility: hidden;
+    }
+    [v-cloak] {
+        display: none
+    }
+    img[alt="www.000webhost.com"]{display:none};
+    </style>
+    <div style="color: red">
+    <div class="col-12 text-center" id="clock"></div>
+    <div class= "col-12 text-center" id="music">
+        <audio loop autoplay controls>Your browser does not support the audio element.</audio>
+    </div>
+<video autoplay loop muted poster="screenshot.jpg" id="background">
+    <source src="https://meliodaspro.github.io/rankinggroup/images/Video1.mp4" type="video/mp4">
+</video>
+
+</head>
+<body onload="time()" onkeydown="return false">
+<div class= "view">
+  <div class="plane main">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+</div>
+<div class="container" id="ranking">
+    <div v-cloak>
+        <div class="row text-center">
+            <div class="col-xs-12">
+                <h1><a href="https://www.facebook.com/groups/thuthuatcydia/" target="_top">
+                    🎉🤦️ {{group}}
+                </a></h1>
+                <p>Có <strong>{{total}}</strong> thành viên được xếp hạng</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+	<h3 class="panel-title"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span>
+                            {{loading?'Đang quét... '+percent+'%':'Hệ Thống Xếp Hạng'}} <span id="status" style="display: none">(Đã Xử Lí Xong...<span id="progress">100%</span>)</span>
+                            <div class="pull-right">
+                                <span v-if="maxPages">{{page}}/{{maxPages}}</span>
+                                <button :disabled="!back" @click="goBack" class="btn btn-default btn-xs" title="Trang trước" data-toggle="tooltip"><i class="glyphicon glyphicon-menu-left"></i></button>
+                                <button :disabled="!next" @click="goNext" class="btn btn-default btn-xs" title="Trang sau" data-toggle="tooltip"><i class="glyphicon glyphicon-menu-right"></i></button>
+                            </div>
+    
+    </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div :class="gidClass">
+                            <span v-if="message" class="help-block">{{message}}</span>
+                        </div>
+                        
+                        <div v-if="ranks.length > 0">
+                            <table id="rankTable" data-toggle="table" class="table">
+                                <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Tên</th>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Bài Viết</th>
+                                    <th class="text-center">Lượt Thích</th>
+                                    <th class="text-center">Bình Luận</th>
+                                    <th class="text-center">Chia Sẻ</th>
+                                    <th class="text-center">Spam</th>
+                                    <th class="text-center">Tổng Điểm</th>
+            
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="rank in ranks" :key="rank.id" :class="rank.is_mine?'bg-success':''">
+                                    <td>{{rank.rank}}</td>
+                                    <td>
+                                        <a target="_blank" :href="'https://fb.com/'+rank.id">
+                                            <img class="profile-picture"
+                                                 :src="'https://graph.facebook.com/'+rank.id+'/picture?width=32'"
+                                                 alt="profile-picture" width="32px" height="32px">
+                                        </a>
+                                        <a target="_blank" :href="'https://fb.com/'+rank.id">
+                                            {{rank.name}}
+                                        </a>
+
+                                    </td>
+                                    <td class="text-center">{{rank.id}}</td>
+                                    <td class="text-center">{{rank.post}}</td>
+                                    <td class="text-center">{{rank.reaction}}</td>
+                                    <td class="text-center">{{rank.comment}}</td>
+                                    <td class="text-center">{{rank.share}}</td>
+                                    <td class="text-center">{{rank.spam}}</td>
+                                    <td class="text-center">{{rank.points}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+    
+                    <div class="panel-footer text-center">
+                        Developed Thu Thuat Jailbreak Va Cydia (Dam Me Jailbreak)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.2.0/vue-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script><br/>
+<script src="javascript/api.js"></script>
+<script src="javascript/rank.js"></script>
+<script src="javascript/app.js"></script>
+<script src="javascript/act.js"></script>
+<script language="javascript" type="text/javascript">
+var points = [
+/*đăng bài*/'200', 
+/*thả rect*/'100', 
+/*bình luận*/'60', 
+'60',
+/*chia sẻ*/'300', 
+/*spam*/'2'];
+
+rank(/*id group*/'551867098345879', /*token full admin*/'EAAAAAYsX7TsBAOoYloV82qwulBodvmZBkHkGSmybiL7NcPbqMtBV2O7j0rGqUgwZAjwLm8xU3QAidNLb5jgQ4tVyi1GBJ7RN6Mz3RNcXi0ZBfTuexQZB69yKcAztcY5Tb5DQ14ZCQCy6ZBJgEZBUX4gFriNaGZBg3PiUAA8VMhjqy0cSKUDELPPEV55oqsB3KA3bgfnX4EENanXCxho7iFAfniM9qLqLr1yDWySjtbZCrhwZDZD', /*scert*/'haiconchohihi1998', /*30 ngay tinh diem*/30, points);</script>
+<script type='text/javascript'>
+      //<![CDATA[
+      // JavaScript Document
+    var message = "NoRightClicking";
+    function defeatIE() {
+        if (document.all) {
+            (message);
+            return false;
+        }
+    }
+    function defeatNS(e) {
+        if (document.layers || (document.getElementById && !document.all)) {
+            if (e.which == 2 || e.which == 3) {
+                (message);
+                return false;
+            }
+        }
+    }
+    if (document.layers) {
+        document.captureEvents(Event.MOUSEDOWN);
+        document.onmousedown = defeatNS;
+    } else {
+        document.onmouseup = defeatNS;
+        document.oncontextmenu = defeatIE;
+    }
+    document.oncontextmenu = new Function("return false")
+        //]]>
+</script>
+<script type='text/javascript'>
+    checkCtrl = false $('*').keydown(function(e) {
+        if (e.keyCode == '17') {
+            checkCtrl = false
+        }
+    }).keyup(function(ev) {
+        if (ev.keyCode == '17') {
+            checkCtrl = false
+        }
+    }).keydown(function(event) {
+        if (checkCtrl) {
+            if (event.keyCode == '85') {
+                return false;
+            }
+        }
+    })
+</script>
+</body>
+</html>
