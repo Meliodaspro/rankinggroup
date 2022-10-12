@@ -84,7 +84,7 @@
                 <h1><a href="https://www.facebook.com/groups/thuthuatcydia/" target="_blank">
                      {{group}}
                 </a></h1>
-                <p>Có <strong>{{total}}</strong> thành viên được xếp hạng</p>
+                <p>Có<strong>{{total}}</strong>thành viên được xếp hạng</p>
             </div>
         </div>
         <div class="row">
@@ -99,13 +99,11 @@
                                 <button :disabled="!next" @click="goNext" class="btn btn-default btn-xs" title="Trang sau" data-toggle="tooltip"><i class="glyphicon glyphicon-menu-right"></i></button>
                             </div>
                         </h3>
-
                     </div>
                     <div class="panel-body">
-                        <div :class="gidClass">
+                        <div class="gidClass">
                             <span v-if="message" class="help-block">{{message}}</span>
                         </div>
-
                         <div v-if="ranks.length > 0">
                             <table id="rankTable" data-toggle="table" class="table">
                                 <thead>
@@ -119,7 +117,6 @@
                                     <th class="text-center">Chia Sẻ</th>
                                     <th class="text-center">Spam</th>
                                     <th class="text-center">Tổng Điểm</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -134,7 +131,6 @@
                                         <a target="_blank" :href="'https://fb.com/'+rank.id">
                                             {{rank.name}}
                                         </a>
-
                                     </td>
                                     <td class="text-center">{{rank.id}}</td>
                                     <td class="text-center">{{rank.post}}</td>
