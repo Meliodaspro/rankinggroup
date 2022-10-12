@@ -36,7 +36,7 @@ var Ranking = Facebook.Feed.extend({
             shared: 0,
             share: 0,
             spam: 0,
-            id: b
+            id: 0
         });
         this.stats[b].name || a.name && (this.stats[b].name = a.name)
     }, _complete: function () {
